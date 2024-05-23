@@ -217,11 +217,13 @@ public record ProductRegistered(string Name, string Category);
 public class ProductProjection: CustomProjection<Product, Guid>
 {
     private readonly IPriceLookup _lookup;
+    private readonly IDocumentSession _documentSession;
 
     // The lookup service would be injected by IoC
-    public ProductProjection(IPriceLookup lookup)
+    public ProductProjection(IPriceLookup lookup, IDocumentSession documentSession)
     {
         _lookup = lookup;
+        _documentSession = documentSession;
         AggregateByStream();
         ProjectionName = "Product";
     }
